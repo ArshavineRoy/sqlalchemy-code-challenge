@@ -76,9 +76,15 @@ class Review(Base):
             f'restaurant_id={self.restaurant_id})'
 
     # Instance methods
+    # returns the Customer instance for this review
     def customer(self):
         return session.query(Customer).filter_by(id=self.customer_id).first()
     
+    # returns the restaurant instance for this review
+    def restaurant(self):
+        return session.query(Restaurant).filter_by(id=self.restaurant_id).first()
+    
+
 if __name__ == '__main__':
     # Query for all Restaurant instances
     restaurant1 = session.query(Restaurant).first()
@@ -88,4 +94,4 @@ if __name__ == '__main__':
     # Now 'restaurants' is a list containing all Restaurant instances in your database
     # print(restaurant1)
     # print(customer1)
-    print(review1.customer())
+    print(review1.restaurant())
