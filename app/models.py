@@ -40,6 +40,12 @@ class Restaurant(Base):
     def all_reviews(self):
         return session.query(Review).filter_by(restaurant_id=self.id).all()
     
+    # returns a collection of all the customers who reviewed the Restaurant
+    def all_customers(self):
+        # return list({review.customer_review for review in self.reviews})
+        return session.query(Customer).distinct().join(Review).filter(Review.restaurant_review == self).all()
+
+    
     
 
 class Customer(Base):
@@ -101,4 +107,4 @@ if __name__ == '__main__':
     # Now 'restaurants' is a list containing all Restaurant instances in your database
     # print(restaurant1)
     # print(customer1)
-    print(restaurant1.all_reviews())
+    print(restaurant1.all_customers())
