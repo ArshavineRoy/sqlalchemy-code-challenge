@@ -45,7 +45,10 @@ class Restaurant(Base):
         # return list({review.customer_review for review in self.reviews})
         return session.query(Customer).distinct().join(Review).filter(Review.restaurant_review == self).all()
 
-    
+    # returns one restaurant instance for the restaurant that has the highest price
+    @classmethod
+    def fanciest(cls):
+        return session.query(cls).order_by(cls.price.desc()).first()
     
 
 class Customer(Base):
