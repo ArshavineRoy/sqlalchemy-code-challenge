@@ -35,7 +35,7 @@ class Restaurant(Base):
             f'name={self.name}, ' + \
             f'price={self.price})'
     
-    # Instance methods
+    # Restaurant instance methods
     # returns a collection of all the reviews for the Restaurant
     def all_reviews(self):
         return session.query(Review).filter_by(restaurant_id=self.id).all()
@@ -67,7 +67,7 @@ class Customer(Base):
             f'first_name={self.first_name}, ' + \
             f'last_name={self.last_name})'
     
-    # Instance methods
+    # Customer instance methods
     # returns a collection of all the reviews that the Customer has left
     def all_reviews(self):
         return self.reviews
@@ -94,6 +94,26 @@ class Customer(Base):
         highest_rating_review = max(reviews, key=lambda review: review.star_rating)
         return session.query(Restaurant).filter_by(id=highest_rating_review.restaurant_id).first()
     
+    # creates a new review for the restaurant with the given restaurant_id
+    def add_review(self, restaurant, rating):
+
+        if isinstance(rating, int):
+            review = Review(
+                star_rating = rating,
+                restaurant_id = restaurant.id,
+                customer_id = self.id,
+                )
+            
+            self.reviews.append(review)
+
+            session.add(review)
+            session.commit()
+
+            print(f"New review added successfully.")
+            
+            return review
+        else:
+            return "Rating must be an integer."
 
 
 class Review(Base):
@@ -117,7 +137,7 @@ class Review(Base):
             f'star_rating={self.star_rating}, ' + \
             f'restaurant_id={self.restaurant_id})'
 
-    # Instance methods
+    # Review instance methods
     # returns the Customer instance for this review
     def customer(self):
         return session.query(Customer).filter_by(id=self.customer_id).first()
@@ -131,14 +151,19 @@ if __name__ == '__main__':
 
     # Instances for testing
     restaurant1 = session.query(Restaurant).first()
+    restaurant2 = session.query(Restaurant).filter_by(id=2).first()
+
     customer1 = session.query(Customer).first()
     customer2 = session.query(Customer).filter_by(id=2).first()
     # customer2_reviews = session.query(Review).filter_by(customer_id=2).all()
    
     review1 = session.query(Review).first()
 
-    # print(restaurant1)
-    print(customer1.favorite_restaurant())
+    # print(restaurant2)
+    # print(customer1.favorite_restaurant())
     # print(customer2.all_restaurants())
 
     # print(restaurant1.all_customers())
+    print(customer2.add_review(restaurant2, rating=5))
+    # session.query(Review).filter_by(id=100).delete()
+    # session.commit()
