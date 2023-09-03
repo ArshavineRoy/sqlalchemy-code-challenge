@@ -82,6 +82,19 @@ class Customer(Base):
     # returns the full name of the customer
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
+    
+    # returns the restaurant instance that has the highest star rating from this customer
+    def favorite_restaurant(self):
+
+        reviews = self.all_reviews()
+
+        if not reviews:
+            return "Customer has no reviews for any restaurant."
+        
+        highest_rating_review = max(reviews, key=lambda review: review.star_rating)
+        return session.query(Restaurant).filter_by(id=highest_rating_review.restaurant_id).first()
+    
+
 
 class Review(Base):
     __tablename__ = 'reviews'
@@ -125,7 +138,7 @@ if __name__ == '__main__':
     review1 = session.query(Review).first()
 
     # print(restaurant1)
-    print(customer1.full_name())
+    print(customer1.favorite_restaurant())
     # print(customer2.all_restaurants())
 
     # print(restaurant1.all_customers())
