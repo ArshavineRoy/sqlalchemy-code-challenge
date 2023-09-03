@@ -20,7 +20,7 @@ class Restaurant(Base):
 
     id = Column(Integer(), primary_key=True)
     name = Column(String(), index=True)
-    price = (Integer())
+    price = Column(Integer())
     created_at = Column(DateTime(), server_default=func.now())
     updated_at = Column(DateTime(), onupdate=func.now())
 
@@ -192,9 +192,9 @@ if __name__ == '__main__':
 
     # print(customer2.id)
     # print(restaurant_x.id)
-    print(customer_x.delete_reviews(restaurant_x))
+    # print(customer_x.delete_reviews(restaurant_x))
     # print(customer2.restaurants)
     # print(customer_x.reviews)
-
+    print(Restaurant.fanciest())
 
 
