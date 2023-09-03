@@ -160,6 +160,13 @@ class Review(Base):
     # returns the restaurant instance for this review
     def restaurant(self):
         return session.query(Restaurant).filter_by(id=self.restaurant_id).first()
+
+    # return a custom string formatted review
+    def full_review(self):
+        restaurant_name = self.restaurant.name
+        customer_name = f'{self.customer.first_name} {self.customer.last_name}'
+        star_rating = self.star_rating
+        return f'Review for {restaurant_name} by {customer_name}: {star_rating} stars'
     
 
 if __name__ == '__main__':
