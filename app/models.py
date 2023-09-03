@@ -1,5 +1,6 @@
-from sqlalchemy import ForeignKey, Column, Integer, String, MetaData, DateTime, func
-from sqlalchemy.orm import relationship, backref
+#!/usr/bin/env python
+from sqlalchemy import ForeignKey, Column, Integer, String, MetaData, DateTime, func, create_engine
+from sqlalchemy.orm import relationship, backref, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.associationproxy import association_proxy
 
@@ -10,6 +11,11 @@ metadata = MetaData(naming_convention=convention)
 
 Base = declarative_base(metadata=metadata)
 
+# Create an SQLAlchemy engine and session
+engine = create_engine('sqlite:///restaurants.db')
+Session = sessionmaker(bind=engine)
+session = Session()
+
 class Restaurant(Base):
     __tablename__ = 'restaurants'
 
@@ -19,8 +25,8 @@ class Restaurant(Base):
     created_at = Column(DateTime(), server_default=func.now())
     updated_at = Column(DateTime(), onupdate=func.now())
 
-    reviews = relationship('Review', back_populates='restaurant', cascade='all, delete-orphan')
-    customers = association_proxy('reviews', 'customer',
+    reviews = relationship('Review', back_populates='restaurant_review', cascade='all, delete-orphan')
+    customers = association_proxy('reviews', 'customer_review',
         creator=lambda cus: Review(customer=cus))
 
 
@@ -39,8 +45,8 @@ class Customer(Base):
     created_at = Column(DateTime(), server_default=func.now())
     updated_at = Column(DateTime(), onupdate=func.now())
 
-    reviews = relationship('Review', back_populates='customer', cascade='all, delete-orphan')
-    restaurants = association_proxy('reviews', 'restaurant',
+    reviews = relationship('Review', back_populates='customer_review', cascade='all, delete-orphan')
+    restaurants = association_proxy('reviews', 'restaurant_review',
         creator=lambda rs: Review(restaurant=rs))
 
     def __repr__(self):
@@ -61,11 +67,26 @@ class Review(Base):
     restaurant_id = Column(Integer(), ForeignKey('restaurants.id'))
     customer_id = Column(Integer(), ForeignKey('customers.id'))
 
-    restaurant = relationship('Restaurant', back_populates='reviews')
-    customer = relationship('Customer', back_populates='reviews')
+    restaurant_review = relationship('Restaurant', back_populates='reviews')
+    customer_review = relationship('Customer', back_populates='reviews')
 
     def __repr__(self):
 
         return f'Review(id={self.id}, ' + \
             f'star_rating={self.star_rating}, ' + \
             f'restaurant_id={self.restaurant_id})'
+
+    # Instance methods
+    def customer(self):
+        return session.query(Customer).filter_by(id=self.customer_id).first()
+    
+if __name__ == '__main__':
+    # Query for all Restaurant instances
+    restaurant1 = session.query(Restaurant).first()
+    customer1 = session.query(Customer).first()
+    review1 = session.query(Review).first()
+
+    # Now 'restaurants' is a list containing all Restaurant instances in your database
+    # print(restaurant1)
+    # print(customer1)
+    print(review1.customer())
