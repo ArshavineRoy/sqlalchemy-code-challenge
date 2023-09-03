@@ -50,6 +50,13 @@ class Restaurant(Base):
     def fanciest(cls):
         return session.query(cls).order_by(cls.price.desc()).first()
     
+    # returns a list of formatted strings with all the reviews for this restaurant
+    def all_reviews_formatted(self):
+        review_strings = []
+        for review in self.reviews:
+            review_string = f"Review for {self.name} by {review.customer_review.first_name} {review.customer_review.last_name}: {review.star_rating} stars."
+            review_strings.append(review_string)
+        return review_strings
 
 class Customer(Base):
     __tablename__ = 'customers'
@@ -198,6 +205,7 @@ if __name__ == '__main__':
     # print(customer_x.delete_reviews(restaurant_x))
     # print(customer2.restaurants)
     # print(customer_x.reviews)
-    print(Restaurant.fanciest())
+    # print(Restaurant.fanciest())
+    print(restaurant1.all_reviews_formatted())
 
 
