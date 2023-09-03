@@ -47,6 +47,7 @@ Similarly, messy code that works is better than clean code that doesn't. First, 
 **Before you submit!** Save and run your code to verify that it works as you expect. If you have any methods that are not working yet, feel free to leave comments describing your progress.
 
 What You Need to Have
+
 You need to have migrations and models for the initial `Restaurant` and `Customer` models, and seed data for some `Restaurant`s and `Customer`s.
 
 The schema currently looks like this:
@@ -68,18 +69,16 @@ The schema currently looks like this:
 You will need to create the migration for the `reviews` table using the attributes specified in the deliverables below.
 
 Deliverables
+
 Write the following methods in the classes. Feel free to build out any helper methods if needed.
 
-Remember: SQLAlchemy give your classes access to a lot of methods already! Keep in mind what methods SQLAlchemy gives you access to on each of your
-
-classes when you're approaching the deliverables below.
+Remember: SQLAlchemy give your classes access to a lot of methods already! Keep in mind what methods SQLAlchemy gives you access to on each of your classes when you're approaching the deliverables below.
 
 Migrations
+
 Before working on the rest of the deliverables, you will need to create a migration for all tables.
 
-- A `Review` belongs to a `Restaurant`, and a `Review` also belongs to a  `Customer`.  In your migration, create any columns your `reviews` table will
-
- need to establish these relationships.
+- A `Review` belongs to a `Restaurant`, and a `Review` also belongs to a  `Customer`.  In your migration, create any columns your `reviews` table will need to establish these relationships.
 
 The `reviews` table should also have:  - A `star_rating` column that stores an integer.
 
@@ -119,15 +118,11 @@ Customer
 
 - `Customer restaurants()`
 
-- should return a collection of all the restaurants that the `Customer` has
+- should return a collection of all the restaurants that the `Customer` has reviewed
 
-   reviewed
+Check that these methods work before proceeding. For example, you should be able to call `session.query(Customer).first().restaurants` and see a list of the restaurants for the first customer in the database based on your seed data; and `session.query(Review).first().customer` should return the customer for the first review in the database.
 
-Check that these methods work before proceeding. For example, you should be able to call `session.query(Customer).first().restaurants` and see a list
-
-of the restaurants for the first customer in the database based on your seed data; and `session.query(Review).first().customer` should return the customer for the first review in the database.
-
- Aggregate and Relationship Methods
+Aggregate and Relationship Methods
 
  Customer
 
