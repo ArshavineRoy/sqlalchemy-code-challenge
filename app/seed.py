@@ -10,13 +10,13 @@ if __name__ == '__main__':
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    # session.query(Restaurant).delete()
-    # session.query(Customer).delete()
-    # session.query(Review).delete()
+    session.query(Restaurant).delete()
+    session.query(Customer).delete()
+    session.query(Review).delete()
 
     fake = Faker()
 
-
+    # Sample 20 restaurants in Kenya
     ke_restaurants = [
         "Carnivore Restaurant",
         "Talisman Restaurant",
@@ -52,12 +52,8 @@ if __name__ == '__main__':
 
         restaurants.append(restaurant)
 
-    # print(fake.first_name())
-    # print(fake.last_name())
-
-
     customers = []
-    for i in range (20):
+    for i in range (60): # Generate 60 fake customers
         customer = Customer(
             first_name = fake.first_name(),
             last_name = fake.last_name()                        
@@ -68,17 +64,18 @@ if __name__ == '__main__':
 
         customers.append(customer)
 
-    # reviews = []
-    # for restaurant in restaurants:
-    #     for i in range(random.randint(1,5)):
-            
-    #         review = Review(
-    #             star_rating=random.randint(0, 10),
-    #             restaurant_id=restaurant.id,
-    #         )
+    reviews = []
+    for restaurant in restaurants:
+        for i in range(random.randint(0, 10)): # Generate between 0 and 10 reviews per restaurant
+            customer = random.choice(customers)  # Choose a random customer in the list
+            restaurant = random.choice(restaurants)  # Choose a random restaurant in the list
+            review = Review(
+                star_rating=random.randint(0, 10),
+                customer_id=customer.id,  # Set the customer_id for the review
+                restaurant_id=restaurant.id, # Set the restaurant_id for the review
+            )
+            reviews.append(review)
 
-    #         reviews.append(review)
-
-    # session.bulk_save_objects(reviews)
-    # session.commit()
-    # session.close()
+    session.bulk_save_objects(reviews)
+    session.commit()
+    session.close()
