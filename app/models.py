@@ -34,6 +34,13 @@ class Restaurant(Base):
         return f'Restaurant(id={self.id}, ' + \
             f'name={self.name}, ' + \
             f'price={self.price})'
+    
+    # Instance methods
+    # returns a collection of all the reviews for the Restaurant
+    def all_reviews(self):
+        return session.query(Review).filter_by(restaurant_id=self.id).all()
+    
+    
 
 class Customer(Base):
     __tablename__ = 'customers'
@@ -94,4 +101,4 @@ if __name__ == '__main__':
     # Now 'restaurants' is a list containing all Restaurant instances in your database
     # print(restaurant1)
     # print(customer1)
-    print(review1.restaurant())
+    print(restaurant1.all_reviews())
