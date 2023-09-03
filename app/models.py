@@ -14,7 +14,7 @@ class Restaurant(Base):
     __tablename__ = 'restaurants'
 
     id = Column(Integer(), primary_key=True)
-    name = (String())
+    name = Column(String(), index=True)
     price = (Integer())
 
 
@@ -40,9 +40,9 @@ class Customer(Base):
 
     
 
-class Review(Base):
-    # __tablename__ = 'reviews'
+# class Review(Base):
+#     # __tablename__ = 'reviews'
 
-    # id = Column(Integer(), primary_key=True)
-    pass
+#     # id = Column(Integer(), primary_key=True)
+#     pass
     
