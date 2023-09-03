@@ -114,6 +114,21 @@ class Customer(Base):
             return review
         else:
             return "Rating must be an integer."
+        
+    # removes all of that customer reviews for a restaurant
+    def delete_reviews(self, restaurant):
+        
+        reviewed_restaurants = self.restaurants
+
+        if restaurant in reviewed_restaurants:
+            for res in reviewed_restaurants:
+                if res.id == restaurant.id:
+                    session.query(Review).filter_by(restaurant_id=res.id).delete()
+                
+                session.commit()
+            return "Restaurant review deleted successfully."        
+        else:
+            return "Review not found."
 
 
 class Review(Base):
@@ -151,19 +166,28 @@ if __name__ == '__main__':
 
     # Instances for testing
     restaurant1 = session.query(Restaurant).first()
-    restaurant2 = session.query(Restaurant).filter_by(id=2).first()
+    restaurant_x = session.query(Restaurant).filter_by(id=18).first()
 
     customer1 = session.query(Customer).first()
-    customer2 = session.query(Customer).filter_by(id=2).first()
+    customer_x = session.query(Customer).filter_by(id=4).first()
     # customer2_reviews = session.query(Review).filter_by(customer_id=2).all()
    
     review1 = session.query(Review).first()
 
-    # print(restaurant2)
+    # print(customer1.reviews)
     # print(customer1.favorite_restaurant())
     # print(customer2.all_restaurants())
 
     # print(restaurant1.all_customers())
-    print(customer2.add_review(restaurant2, rating=5))
+    # print(customer1.add_review(restaurant2, rating=5))
     # session.query(Review).filter_by(id=100).delete()
     # session.commit()
+
+    # print(customer2.id)
+    # print(restaurant_x.id)
+    print(customer_x.delete_reviews(restaurant_x))
+    # print(customer2.restaurants)
+    # print(customer_x.reviews)
+
+
+

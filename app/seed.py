@@ -70,7 +70,7 @@ if __name__ == '__main__':
             customer = random.choice(customers)  # Choose a random customer in the list
             restaurant = random.choice(restaurants)  # Choose a random restaurant in the list
             review = Review(
-                star_rating=random.randint(0, 10),
+                star_rating=random.randint(1, 10),
                 customer_id=customer.id,  # Set the customer_id for the review
                 restaurant_id=restaurant.id, # Set the restaurant_id for the review
             )
