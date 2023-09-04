@@ -1,176 +1,194 @@
-# SQLAlchemy Code Challenge: Restaurants
+# Restaurant Review System with SQLAlchemy
 
-## Phase 3 Week 3
+## Phase 3 Week 3 Code Challenge
 
-For this assignment, we'll be working with a restaurant review domain.
+[![license](https://img.shields.io/badge/license-%20MIT%20-green.svg)](./LICENSE)
+![python version](https://img.shields.io/badge/python-3.10.12+-blue.svg)
+![SQLAlchemy version](https://img.shields.io/badge/SQLAlchemy-2.0.20+-cyan.svg)
+![alembic version](https://img.shields.io/badge/alembic-1.12.0+-orange.svg)
+![platforms](https://img.shields.io/badge/Platforms-Linux%20|%20Windows%20|%20Mac%20-purple.svg)
+***
 
-We have three models: `Restaurant`, `Review`, and `Customer`.
+## Introduction
 
-For our purposes, a `Restaurant` has many `Review`s, a `Customer` has many
+This is a Restaurant Review System built with Python and utilizes `SQLAlchemy and Alembic Migrations`, `SQLAlchemy Relationships`, `Class and Instance Methods`, and `SQLAlchemy Querying` working with a Yelp-style domain with three models: `Restaurant`, `Review`, and `Customer`.
 
-`Review`s, and a `Review` belongs to a `Restaurant` and to a `Customer`.
-
-`Restaurant` - `Customer` is a many to many relationship.
-
-**Note**: You should draw your domain on paper or on a whiteboard _before you
-
-start coding_. Remember to identify a single source of truth for your data.
-
-## Topics
-
-- SQLAlchemy Migrations
-
-- SQLAlchemy Relationships
-
-- Class and Instance Methods
-
-- SQLAlchemy Querying
+***NOTE:** Some methods in the deliverables have been changed so they don't conflict with table names.*
 
 ***
 
-## Instructions
+## Table of Contents
 
-Build out all of the methods listed in the deliverables.
+- [Prerequisites](#prerequisites)
+- [Features](#features)
+- [Project Setup](#project-setup)
+- [Entity Relationship Diagram](#entity-relationship-diagram)
+- [Usage](#usage)
+  - [Methods](#methods)
+    - [Restaurant](#restaurant)
+    - [Usage](#customer)
+    - [Review](#review)
+- [Author & License](#author--license)
 
-The methods are listed in a suggested order, but you can feel free to tackle the ones you think are easiest. Be careful: some of the later methods rely on earlier ones.
+***
 
-**Remember!** This code challenge does not have tests. You cannot run `pytest`.
+## Prerequisites
 
-You'll need to create your own sample instances so that you can try out your code on your own. Make sure your relationships and methods work in the console before submitting.
+- Python3 v3.10.12+
 
-You are also encouraged to use the `seeds.py` file to create sample data to test your models and relationships.
+- SQLAlchemy v2.0.20+
 
-Writing error-free code is more important than completing all of the deliverables listed - prioritize writing methods that work over writing more methods that don't work. You should test your code in the console as you write.
+- Alembic v1.12.0+
 
-Similarly, messy code that works is better than clean code that doesn't. First, prioritize getting things working. Then, if there is time at the end, refactor your code to adhere to best practices.
+***
 
-**Before you submit!** Save and run your code to verify that it works as you expect. If you have any methods that are not working yet, feel free to leave comments describing your progress.
+## Features
 
-What You Need to Have
+- Create and manage customer and restaurant profiles
+- Add, retrieve, and delete reviews for restaurants
+- Find customers and restaurants based on reviews
+- Retrieve a list of all reviews
+- Find the fanciest restaurant in the list
+- Find a customer's favorite restaurant
 
-You need to have migrations and models for the initial `Restaurant` and `Customer` models, and seed data for some `Restaurant`s and `Customer`s.
+***
 
-The schema currently looks like this:
+## Project Setup
 
-### Restaurant Table
+### 1. Clone the repository
 
-| Column      | Type     |
-|-------------|----------|
-| name        | String   |
-| price       | Integer  |
+```python
+git clone https://github.com/ArshavineRoy/sqlalchemy-code-challenge
+```
 
-### Customers Table
+### 2. Navigate to the project's directory
 
-| Column      | Type     |
-|-------------|----------|
-| first_name  | String   |
-| last_name   | String   |
+```python
+cd sqlalchemy-code-challenge
+```
 
-You will need to create the migration for the `reviews` table using the attributes specified in the deliverables below.
+### 3. Open `app` directory and find `models.py`
 
-Deliverables
+```python
+cd app
+```
 
-Write the following methods in the classes. Feel free to build out any helper methods if needed.
+***
 
-Remember: SQLAlchemy give your classes access to a lot of methods already! Keep in mind what methods SQLAlchemy gives you access to on each of your classes when you're approaching the deliverables below.
+## Entity Relationship Diagram
 
-Migrations
+The Restaurant Review System uses the `Association Object Models` for the associations and relationships between the three models: `Restaurant`, `Customer`, and `Reviews`.
 
-Before working on the rest of the deliverables, you will need to create a migration for all tables.
+A `Restaurant` has many `Review`s, a `Customer` has many `Review`s, and a `Review` belongs to a `Restaurant` and to a `Customer`. The ERD below shows these relationships:
 
-- A `Review` belongs to a `Restaurant`, and a `Review` also belongs to a  `Customer`.  In your migration, create any columns your `reviews` table will need to establish these relationships.
+![ERD](erd.png)
 
-The `reviews` table should also have:  - A `star_rating` column that stores an integer.
+***
 
-After creating the `reviews` table using a migration, use the `seeds.py` file to create instances of all your classes so you can test your code.
+## Usage
 
-**Once you've set up your tables**, work on building out the following deliverables.
+You can use the Restaurant Review System to simulate interactions between customers, restaurants, and reviews to:
 
-Object Relationship Methods
+1. Create customer and restaurant instances.
+2. Add reviews using the add_review method.
+3. Retrieve information about customers, restaurants, and reviews using the provided methods.
 
-Use SQLAlchemy query methods where appropriate.
+For example, you should be able to call *`session.query(Customer).first().all_restaurants()`* and see a list of the restaurants for the first customer in the database based on your seed data; and *`session.query(Review).first().customer`* should return the customer for the first review in the database.
 
-Review
+### Methods
 
-- `Review customer()`
+Use the `seed.py` file to create sample data to test the models and relationships by the following methods.
 
-- should return the `Customer` instance for this review
+#### Restaurant
 
-- `Review restaurant()`
+***
 
-- should return the `Restaurant` instance for this review
+`self.all_reviews()`
 
-Restaurant
-
-- `Restaurant reviews()`
+- *changed from `self.reviews()` in deliverables*
 
 - returns a collection of all the reviews for the `Restaurant`
 
-- `Restaurant customers()`
+`self.all_customers()`
+
+- *changed from `self.customers()` in deliverables.*
 
 - returns a collection of all the customers who reviewed the `Restaurant`
 
-Customer
+`cls.fanciest()`
 
-- `Customer reviews()`
+- A **class** method that returns ***one*** restaurant instance for the restaurant that has the highest   price
 
-- should return a collection of all the reviews that the `Customer` has left
+`self.all_reviews()`
 
-- `Customer restaurants()`
+- returns a list of strings with all the reviews for this restaurant in the following format:
 
-- should return a collection of all the restaurants that the `Customer` has reviewed
+```python
+[ "Review for {insert restaurant name} by {insert customer's full name}: {insert review star_rating} stars.",
 
-Check that these methods work before proceeding. For example, you should be able to call `session.query(Customer).first().restaurants` and see a list of the restaurants for the first customer in the database based on your seed data; and `session.query(Review).first().customer` should return the customer for the first review in the database.
+"Review for {insert restaurant name} by {insert customer's full name}: {insert review star_rating} stars.", ]
+```
 
-Aggregate and Relationship Methods
+#### Customer
 
- Customer
+***
 
-- `Customer full_name()`
+`self.all_reviews()`
+
+- *changed from `self.reviews()` in deliverables.*
+
+- returns a collection of all the reviews that the `Customer` has left
+
+`self.all_restaurants()`
+
+*changed from `self.restaurants()` in deliverables.*
+
+- returns a collection of all the restaurants that the `Customer` has reviewed
+
+`self.full_name()`
 
 - returns the full name of the customer, with the first name and the last name  concatenated, Western style.
 
-- `Customer favorite_restaurant()`
+`self.favorite_restaurant()`
 
 - returns the restaurant instance that has the highest star rating from this customer
 
-- `Customer add_review(restaurant, rating)`
+`self.add_review(restaurant, rating)`
 
 - takes a `restaurant` (an instance of the `Restaurant` class) and a rating
 
 - creates a new review for the restaurant with the given `restaurant_id`
 
-- `Customer delete_reviews(restaurant)`
+`self.delete_reviews(restaurant)`
 
 - takes a `restaurant` (an instance of the `Restaurant` class) and
 
 - removes **all** their reviews for this restaurant
 
-- you will have to delete rows from the `reviews` table to get this to work!
+#### Review
 
-Review
+***
 
-- `Review full_review()`
+`review.customer()`
 
-- should return a string formatted as follows:
-Review for {insert restaurant name} by {insert customer's full name}: {insert review star_rating} stars.
+- returns the `Customer` instance for this review
 
-Restaurant
+`review.restaurant()`
 
-- `Restaurant fanciest(), this method should be a class method`
+- returns the `Restaurant` instance for this review
 
-- returns _one_ restaurant instance for the restaurant that has the highest   price
+`review.full_review()`
 
-- `Restaurant all_reviews()`
+- returns a string in the following format:
 
-- should return an list of strings with all the reviews for this restaurant
+```text
+Review for {insert restaurant name} by {customer full_name}: {review star_rating} stars.
+```
 
-   formatted as follows:
+***
 
-[
+## Author & License
 
- "Review for {insert restaurant name} by {insert customer's full name}: {insert review star_rating} stars.",
+Authored by [Arshavine Waema](https://github.com/ArshavineRoy).
 
- "Review for {insert restaurant name} by {insert customer's full name}: {insert review star_rating} stars.",
-
-]
+Licensed under the [MIT License](LICENSE) - see the [LICENSE](LICENSE) file for details.
