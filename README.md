@@ -4,8 +4,9 @@
 
 [![license](https://img.shields.io/badge/license-%20MIT%20-green.svg)](./LICENSE)
 ![python version](https://img.shields.io/badge/python-3.10.12+-blue.svg)
-![SQLAlchemy version](https://img.shields.io/badge/SQLAlchemy-2.0.20+-cyan.svg)
-![alembic version](https://img.shields.io/badge/alembic-1.12.0+-orange.svg)
+![SQLAlchemy version](https://img.shields.io/badge/SQLAlchemy-2.0.20-cyan.svg)
+![alembic version](https://img.shields.io/badge/alembic-1.12.0-orange.svg)
+![faker version](https://img.shields.io/badge/faker-1.12.0-mint.svg)
 ![platforms](https://img.shields.io/badge/Platforms-Linux%20|%20Windows%20|%20Mac%20-purple.svg)
 ***
 
@@ -34,11 +35,15 @@ This is a Restaurant Review System built with Python and utilizes `SQLAlchemy an
 
 ## Prerequisites
 
-- Python3 v3.10.12+
+The packages are included in the `Pipfile`, and can be installed through it into the virtual environment.
 
-- SQLAlchemy v2.0.20+
+- Python3 v3.10 +
 
-- Alembic v1.12.0+
+- SQLAlchemy v2.0.20
+
+- Alembic v1.12.0
+
+- Faker v19.3.1
 
 ***
 
@@ -67,7 +72,27 @@ git clone https://github.com/ArshavineRoy/sqlalchemy-code-challenge
 cd sqlalchemy-code-challenge
 ```
 
-### 3. Open `app` directory and find `models.py`
+### 3. Install all the required dependencies
+
+The root directory of this repository contains the `Pipfile` with all the required dependencies. To install them into your virtual environment, run this command from the `root` directory:
+
+```python
+pipenv install
+```
+
+If `pipenv` is not already installed, you can do so using `pip`:
+
+```python
+pip install pipenv
+```
+
+### 4. Activate the virtual environment and work within it
+
+```python
+pipenv shell
+```
+
+### 5. Navigate to the `app` directory and run commands from here
 
 ```python
 cd app
