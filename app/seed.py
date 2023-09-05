@@ -37,8 +37,8 @@ if __name__ == '__main__':
     restaurants = []
     for i in range(20):
         restaurant = Restaurant(
-            name = random.choice(ke_restaurants),
-            price = random.randint(100, 1000)
+            name=random.choice(ke_restaurants),
+            price=random.randint(100, 1000)
         )
 
         session.add(restaurant)
@@ -47,10 +47,10 @@ if __name__ == '__main__':
         restaurants.append(restaurant)
 
     customers = []
-    for i in range (60): # Generate 60 fake customers
+    for i in range(60):  # Generate 60 fake customers
         customer = Customer(
-            first_name = fake.first_name(),
-            last_name = fake.last_name()                        
+            first_name=fake.first_name(),
+            last_name=fake.last_name()
         )
 
         session.add(customer)
@@ -60,13 +60,13 @@ if __name__ == '__main__':
 
     reviews = []
     for restaurant in restaurants:
-        for i in range(random.randint(0, 10)): # Generate between 0 and 10 reviews per restaurant
+        for i in range(random.randint(0, 10)):  # Generate between 0 and 10 reviews per restaurant
             customer = random.choice(customers)  # Choose a random customer in the list
             restaurant = random.choice(restaurants)  # Choose a random restaurant in the list
             review = Review(
                 star_rating=random.randint(1, 10),
                 customer_id=customer.id,  # Set the customer_id for the review
-                restaurant_id=restaurant.id, # Set the restaurant_id for the review
+                restaurant_id=restaurant.id,  # Set the restaurant_id for the review
             )
             reviews.append(review)
 

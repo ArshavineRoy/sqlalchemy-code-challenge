@@ -72,7 +72,7 @@ git clone https://github.com/ArshavineRoy/sqlalchemy-code-challenge
 cd sqlalchemy-code-challenge
 ```
 
-### 3. Install all the required dependencies
+### 3. Install required dependencies
 
 The root directory of this repository contains the `Pipfile` with all the required dependencies. To install them into your virtual environment, run this command from the `root` directory:
 
@@ -86,16 +86,24 @@ If `pipenv` is not already installed, you can do so using `pip`:
 pip install pipenv
 ```
 
-### 4. Activate the virtual environment and work within it
+### 4. Activate the virtual environment
 
 ```python
 pipenv shell
 ```
 
-### 5. Navigate to the `app` directory and run commands from here
+### 5. Navigate into the `app` directory
+
+Run all commands from within this directory
 
 ```python
 cd app
+```
+
+### 5. Run `main.py` for testing
+
+```python
+./main.py
 ```
 
 ***
@@ -144,7 +152,7 @@ Use the `seed.py` file to create sample data to test the models and relationship
 
 - A **class** method that returns ***one*** restaurant instance for the restaurant that has the highest   price
 
-`self.all_reviews()`
+`self.all_reviews_formatted()`
 
 - returns a list of strings with all the reviews for this restaurant in the following format:
 
