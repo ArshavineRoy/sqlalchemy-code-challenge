@@ -1,19 +1,9 @@
 #!/usr/bin/env python
-from sqlalchemy import ForeignKey, Column, Integer, String, MetaData, DateTime, func, create_engine
-from sqlalchemy.orm import relationship, sessionmaker, declarative_base
+from sqlalchemy import ForeignKey, Column, Integer, String, MetaData, DateTime, func
+from sqlalchemy.orm import relationship
 from sqlalchemy.ext.associationproxy import association_proxy
+from db import Base, session
 
-convention = {
-    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-}
-metadata = MetaData(naming_convention=convention)
-
-Base = declarative_base(metadata=metadata)
-
-# Create an SQLAlchemy engine and session
-engine = create_engine('sqlite:///restaurants.db')
-Session = sessionmaker(bind=engine)
-session = Session()
 
 class Restaurant(Base):
     __tablename__ = 'restaurants'
